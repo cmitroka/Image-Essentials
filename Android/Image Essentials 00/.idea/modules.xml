@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/ImageEssentials.iml" filepath="$PROJECT_DIR$/ImageEssentials.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cropper/cropper.iml" filepath="$PROJECT_DIR$/cropper/cropper.iml" />
+      <module fileurl="file://C:\Dev\ImageEssentials\cropper2\cropper2.iml" filepath="C:\Dev\ImageEssentials\cropper2\cropper2.iml" />
+      <module fileurl="file://C:\Dev\ImageEssentials\cropper3\cropper3.iml" filepath="C:\Dev\ImageEssentials\cropper3\cropper3.iml" />
+    </modules>
+  </component>
+</project>

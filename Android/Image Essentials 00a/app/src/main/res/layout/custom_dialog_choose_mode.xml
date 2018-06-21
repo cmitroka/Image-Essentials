@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:gravity="center"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="You need to choose a mode; Lossless without Undo is the default."/>
+
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/radioGroupMode"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:orientation="vertical">
+        <RadioButton
+            android:id="@+id/rbLossy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lossy"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:text="This option saves all image manipulations (allowing you to undo) but re-encodes every time.  Mainly for the casual user."/>
+        <RadioButton
+            android:id="@+id/rbLosslessWOUndo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lossless without Undo"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:text="This option is totally lossless, however doesn't allow undo.  It's fast and not resource intensive."/>
+        <RadioButton
+            android:id="@+id/rbLosslessWUndo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lossless with Undo"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:text="This option saves all image manipulations (allowing you to undo) and is totally lossless.  It's also the slowest and consumes a lot of resources.  Mainly for the image purist."/>
+
+    </RadioGroup>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+    <Button
+        android:id="@+id/buttonSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Save" />
+        <Button
+            android:id="@+id/buttonCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Cancel" />
+
+    </LinearLayout>
+</LinearLayout>
