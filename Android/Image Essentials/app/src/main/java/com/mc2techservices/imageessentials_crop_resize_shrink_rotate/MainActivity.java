@@ -2,6 +2,7 @@ package com.mc2techservices.imageessentials_crop_resize_shrink_rotate;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -18,6 +19,7 @@ import android.opengl.GLES10;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -56,6 +58,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.net.URI;
+import java.util.ArrayList;
 
 import javax.microedition.khronos.egl.EGL10;
 import javax.microedition.khronos.egl.EGLConfig;
@@ -75,9 +78,11 @@ public class MainActivity extends AppCompatActivity {
     private Uri mCropImageUri;
     private String baseImageURL;
 
+    private String saveError;
     private String saveLoc;
     private String saveFile;
     private int saveQuality;
+    private static int RESULT_LOAD_IMG = 1;
 
     private CropImageViewOptions mCropImageViewOptions = new CropImageViewOptions();
     // endregion
@@ -97,10 +102,6 @@ public class MainActivity extends AppCompatActivity {
         FeatureInfo[] list = this.getPackageManager()
                 .getSystemAvailableFeatures();
 
-        Toast.makeText(this,
-                "OpenGL ES Version: " + list[list.length - 1].getGlEsVersion(),
-                Toast.LENGTH_LONG).show();
-
         progressBar = findViewById(R.id.progressBar);
         testImage = findViewById(R.id.testImage);
         progressBar.setVisibility(View.INVISIBLE);
@@ -118,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             setMainFragmentByPreset(CropDemoPreset.RECT);
         }
-
+        checkDiskPermission();
     }
 
     private void setCropViewOptionsFromAppSpecific()
@@ -239,6 +240,47 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+    public void showImagePicker() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+
+        Intent chooser = Intent.createChooser(intent, "Choose a Picture");
+        //chooser.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivityForResult(chooser, RESULT_LOAD_IMG);
+    }
+    public void showImagePicker2() {
+
+        Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        getIntent.setType("image/*");
+
+        Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        pickIntent.setType("image/*");
+
+        Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
+
+        ArrayList<Uri> imageUris = new ArrayList<Uri>();
+        Intent shareIntent = new Intent();
+        shareIntent.setAction(Intent.ACTION_SEND_MULTIPLE);
+        shareIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, imageUris);
+        shareIntent.setType("image/*");
+        startActivity(Intent.createChooser(shareIntent, "Share images to.."));
+
+        //startActivityForResult(pickIntent, RESULT_LOAD_IMG);
+    }
+    public boolean handleActivityResult(final int requestCode, final int resultCode, final Intent data) {
+        if (requestCode != 1) return false;
+        if (resultCode == Activity.RESULT_OK) {
+            try {
+                Uri selectedImage = data.getData();
+            } catch (Exception e) {
+
+            }
+        }
+        return true;
+    }
+
     @Override
     @SuppressLint("NewApi")
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -338,6 +380,7 @@ public class MainActivity extends AppCompatActivity {
     public void onDrawerOptionClicked(View view) {
         switch (view.getId()) {
             case R.id.drawer_option_load:
+                //showImagePicker();
                 if (CropImage.isExplicitCameraPermissionRequired(this)) {
                     requestPermissions(
                             new String[]{Manifest.permission.CAMERA},
@@ -521,7 +564,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    ShowToast("Save Error: Invalid File Name.  Please change it and try again.");
+                    ShowToast(saveError);
                 }
             }
         });
@@ -571,18 +614,32 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else
                 {
+                    saveError="Save Error: Invalid File Name.  Please change it and try again.";
                     System.out.println ("Error, file already exists.");
                 }
                 //file.delete();
             }
             catch (Exception ex)
             {
-
+                saveError="Save Error: Couldn't save to " + pSaveToLocation + "; please select another location.";
             }
         }
         return retVal;
     }
 
+    private void checkDiskPermission ()
+    {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            //Toast.makeText(this, "No Permissions" , Toast.LENGTH_LONG).show();
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 0);
+        }
+        else
+        {
+            //Toast.makeText(this, "Has Permissions" , Toast.LENGTH_LONG).show();
+        }
+    }
     public void ShowCustomDialogChooseQuality() {
         final Dialog nsp = new Dialog(this);
         nsp.requestWindowFeature(Window.FEATURE_NO_TITLE);
