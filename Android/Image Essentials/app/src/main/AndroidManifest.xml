@@ -10,7 +10,6 @@
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="Image Essentials"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat">
         <activity android:name="com.mc2techservices.imageessentials_crop_resize_shrink_rotate.InitActivity">
@@ -20,7 +19,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.mc2techservices.imageessentials_crop_resize_shrink_rotate.MainActivity"></activity>
+
+        <activity
+            android:name="com.mc2techservices.imageessentials_crop_resize_shrink_rotate.MainActivity"
+            android:label="">
+        </activity>
+
+
         <activity android:name="com.mc2techservices.imageessentials_crop_resize_shrink_rotate.CropResultActivity"></activity>
     </application>
 

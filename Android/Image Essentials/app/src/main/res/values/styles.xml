@@ -27,4 +27,8 @@
         <item name="android:background">?android:attr/selectableItemBackground</item>
 
     </style>
+    <style name="HiddenTitleTheme" parent="android:Widget.DeviceDefault.Light.TextView">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+    </style>
 </resources>
