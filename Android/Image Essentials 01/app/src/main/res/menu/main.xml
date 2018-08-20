@@ -1,0 +1,36 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/main_action_crop"
+        android:title="CROP"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/main_action_resize"
+        android:title="RESIZE"
+        app:showAsAction="always">
+    </item>
+
+    <item
+        android:id="@+id/main_action_rotate"
+        android:title="ROTATE"
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/main_action_rotate_clockwise"
+                android:title="Rotate Clockwise"/>
+            <item
+                android:id="@+id/main_action_rotate_cclockwise"
+                android:title="Rotate Counter-Clockwise"/>
+            <item
+                android:id="@+id/main_action_flip_horizontally"
+                android:title="@string/main_action_flip_horizontally"/>
+            <item
+                android:id="@+id/main_action_flip_vertically"
+                android:title="@string/main_action_flip_vertically"/>
+        </menu>
+    </item>
+</menu>
+    <!--
+    android:icon="@android:drawable/ic_menu_rotate"
+    android:icon="@drawable/crop_image_menu_flip"
+    -->
